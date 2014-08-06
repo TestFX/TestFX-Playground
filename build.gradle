@@ -1,0 +1,44 @@
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: "eclipse"
+
+description = "TestFX Example Project"
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+idea {
+    project {
+        jdkName "1.7"
+        languageLevel "1.7"
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    //maven {
+    //    url "https://oss.sonatype.org/content/repositories/snapshots/" 
+    //}
+}
+
+dependencies {
+    testCompile "junit:junit:4.11"
+    testCompile "org.hamcrest:hamcrest-all:1.3"
+    testCompile "org.mockito:mockito-all:1.9.5"
+    testCompile "org.testfx:testfx-core:3.2.0.SNAPSHOT"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.0"
+}
+
+task createDirs << {
+    sourceSets*.allSource.srcDirs*.each { it.mkdirs() }
+    sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}
+
+task printConfigs << {
+    for (configuration in configurations) {
+        println configuration.name
+    }
+}
