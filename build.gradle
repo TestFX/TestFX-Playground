@@ -14,7 +14,7 @@ idea {
 }
 
 repositories {
-    mavenLocal()
+    //mavenLocal()
     mavenCentral()
     //maven {
     //    url "https://oss.sonatype.org/content/repositories/snapshots/" 
@@ -25,7 +25,8 @@ dependencies {
     testCompile "junit:junit:4.11"
     testCompile "org.hamcrest:hamcrest-all:1.3"
     testCompile "org.mockito:mockito-all:1.9.5"
-    testCompile "org.testfx:testfx-core:3.2.0.SNAPSHOT"
+    testCompile group: "org.loadui", name: "testFx", version: "3.1.2"
+    //testCompile group: "org.testfx", name: "testfx-core", version: "3.2.0.SNAPSHOT"
 }
 
 task wrapper(type: Wrapper) {

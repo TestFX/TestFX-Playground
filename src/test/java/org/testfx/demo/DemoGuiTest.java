@@ -33,7 +33,7 @@ public class DemoGuiTest extends GuiTest {
 	@Test
 	public void should_click_login_button() {
 		// when:
-		clickOn("#loginButton");
+		click("#loginButton");
 		
 		// then:
 		Assertions.verifyThat("#loginStatus", Commons.hasText("logged in"));
