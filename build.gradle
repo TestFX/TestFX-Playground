@@ -1,47 +1,59 @@
+//-------------------------------------------------------------------------------------------------
+// ROOT PROJECT.
+//-------------------------------------------------------------------------------------------------
+
+// provide assemble and clean tasks.
+apply plugin: "base"
+
+// task to add gradle wrapper files.
 task wrapper(type: Wrapper) {
-    gradleVersion = "2.2"
+    gradleVersion = project.ext.gradleVersion
+    distributionUrl = "https://services.gradle.org/distributions/" +
+        "gradle-${gradleVersion}-all.zip"
 }
 
-allprojects {
+// task to print gradle and groovy versions.
+task versions(group: "help") << {
+    println "Java version: ${System.properties["java.version"]}"
+    println "Gradle version: ${project.gradle.gradleVersion}"
+    println "Groovy version: ${GroovySystem.version}"
+}
+
+//-------------------------------------------------------------------------------------------------
+// EACH PROJECT.
+//-------------------------------------------------------------------------------------------------
+
+allprojects { project ->
+    // task to create main and test source directories.
+    task sourceDirs(group: "build setup") << {
+        if (project != rootProject) {
+            sourceSets*.allSource.srcDirs*.each { it.mkdirs() }
+            sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+        }
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+// SUB PROJECTS.
+//-------------------------------------------------------------------------------------------------
+
+subprojects { project ->
     apply plugin: "java"
-    apply plugin: "idea"
-    apply plugin: "eclipse"
 
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
-
-    idea {
-        project {
-            jdkName "1.8"
-            languageLevel "1.8"
-        }
-    }
-}
-
-project(":") {
     repositories {
-        //mavenLocal()
         mavenCentral()
-        maven {
-            url "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
     }
 
+    // test source dependencies.
     dependencies {
-        testCompile "org.testfx:testfx-core:4.0.0-SNAPSHOT"
-        testCompile "junit:junit:4.11"
-        testCompile "org.hamcrest:hamcrest-all:1.3"
-        testCompile "org.mockito:mockito-all:1.9.5"
-    }
+        // testfx test library.
+        testCompile "org.testfx:testfx-core:4.0.+"
+        testCompile "org.testfx:testfx-junit:4.0.+"
 
-    task createDirs << {
-        sourceSets*.allSource.srcDirs*.each { it.mkdirs() }
-        sourceSets*.resources.srcDirs*.each { it.mkdirs() }
-    }
-
-    task printConfigs << {
-        for (configuration in configurations) {
-            println configuration.name
+        // junit test framework and hamcrest assertions.
+        testCompile "junit:junit:4.11", {
+            exclude group: "org.hamcrest"
         }
+        testCompile "org.hamcrest:hamcrest-all:1.3"
     }
 }
