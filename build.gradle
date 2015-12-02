@@ -2,21 +2,23 @@
 // ROOT PROJECT.
 //-------------------------------------------------------------------------------------------------
 
-// provide assemble and clean tasks.
-apply plugin: "base"
+rootProject.with { project ->
+    // provide assemble and clean tasks.
+    apply(plugin: "base")
 
-// task to add gradle wrapper files.
-task wrapper(type: Wrapper) {
-    gradleVersion = project.ext.gradleVersion
-    distributionUrl = "https://services.gradle.org/distributions/" +
-        "gradle-${gradleVersion}-all.zip"
-}
+    // task to add gradle wrapper files.
+    task("wrapper", type: Wrapper) {
+        gradleVersion = project.ext.gradleVersion
+        distributionUrl = "https://services.gradle.org/distributions/" +
+            "gradle-${gradleVersion}-all.zip"
+    }
 
-// task to print gradle and groovy versions.
-task versions(group: "help") << {
-    println "Java version: ${System.properties["java.version"]}"
-    println "Gradle version: ${project.gradle.gradleVersion}"
-    println "Groovy version: ${GroovySystem.version}"
+    // task to print gradle and groovy versions.
+    task("versions", group: "help").doLast {
+        println "Java version: ${System.properties["java.version"]}"
+        println "Gradle version: ${project.gradle.gradleVersion}"
+        println "Groovy version: ${GroovySystem.version}"
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -25,11 +27,16 @@ task versions(group: "help") << {
 
 allprojects { project ->
     // task to create main and test source directories.
-    task sourceDirs(group: "build setup") << {
-        if (project != rootProject) {
-            sourceSets*.allSource.srcDirs*.each { it.mkdirs() }
-            sourceSets*.resources.srcDirs*.each { it.mkdirs() }
-        }
+    task("initSourceDirs", group: "build setup").doLast {
+        // ignore source directories for projects without source sets.
+        if (!project.hasProperty("sourceSets")) { return }
+
+        // list all source directories.
+        def sourceSets = project.sourceSets as SourceSetContainer
+        def sourceDirs = sourceSets*.allSource.srcDirs.flatten() as List<File>
+
+        // create source directories, for those who not exists.
+        sourceDirs.each { it.mkdirs() }
     }
 }
 
@@ -38,10 +45,11 @@ allprojects { project ->
 //-------------------------------------------------------------------------------------------------
 
 subprojects { project ->
-    apply plugin: "java"
+    apply(plugin: "java")
 
     repositories {
-        mavenCentral()
+        jcenter()      // Bintray’s JCenter
+        mavenCentral() // Sonatype’s Maven Central
     }
 
     // test source dependencies.
@@ -51,7 +59,7 @@ subprojects { project ->
         testCompile "org.testfx:testfx-junit:4.0.+"
 
         // junit test framework and hamcrest assertions.
-        testCompile "junit:junit:4.11", {
+        testCompile "junit:junit:4.12", {
             exclude group: "org.hamcrest"
         }
         testCompile "org.hamcrest:hamcrest-all:1.3"
