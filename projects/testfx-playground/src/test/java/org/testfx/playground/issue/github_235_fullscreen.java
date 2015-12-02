@@ -1,43 +1,40 @@
 package org.testfx.playground.issue;
 
+import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.api.FxToolkit;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.testfx.api.FxAssert.verifyThat;
-import static org.testfx.matcher.base.NodeMatchers.hasText;
 
-public class github_235_fullscreen extends ApplicationTest {
-    Stage stageFixture;
+public class github_235_fullscreen {
+    Stage stage;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Button button = new Button("click me!");
-        button.setOnAction(actionEvent -> button.setText("clicked!"));
+    @Before
+    public void setup() throws Exception {
+        stage = FxToolkit.registerPrimaryStage();
+        FxToolkit.setupApplication(FullScreenApp.class);
+    }
 
-        stageFixture = stage;
-        stage.setScene(new Scene(new StackPane(button), 100, 100));
-        stage.setFullScreen(true);
-        stage.show();
+    public static class FullScreenApp extends Application {
+        @Override
+        public void start(Stage stage) throws Exception {
+            Label label = new Label("content");
+            stage.setScene(new Scene(new StackPane(label), 100, 100));
+            stage.setFullScreen(true);
+            stage.show();
+        }
     }
 
     @Test
     public void stage_should_be_visible() {
         // expect:
-        verifyThat(stageFixture.isFullScreen(), equalTo(true));
-    }
-
-    @Test
-    public void should_click_on_button() {
-        // when:
-        clickOn(".button");
-
-        // then:
-        verifyThat(".button", hasText("clicked!"));
+        verifyThat(stage.isFullScreen(), equalTo(true));
     }
 }
