@@ -45,23 +45,11 @@ allprojects { project ->
 //-------------------------------------------------------------------------------------------------
 
 subprojects { project ->
-    apply(plugin: "java")
-
     repositories {
+        if (project.hasProperty("useMavenLocal")) {
+            mavenLocal()
+        }
         jcenter()      // Bintray’s JCenter
         mavenCentral() // Sonatype’s Maven Central
-    }
-
-    // test source dependencies.
-    dependencies {
-        // testfx test library.
-        testCompile "org.testfx:testfx-core:4.0.+"
-        testCompile "org.testfx:testfx-junit:4.0.+"
-
-        // junit test framework and hamcrest assertions.
-        testCompile "junit:junit:4.12", {
-            exclude group: "org.hamcrest"
-        }
-        testCompile "org.hamcrest:hamcrest-all:1.3"
     }
 }
