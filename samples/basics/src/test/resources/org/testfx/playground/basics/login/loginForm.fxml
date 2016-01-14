@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<StackPane prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane hgap="15.0" minHeight="-Infinity" vgap="15.0">
+         <children>
+            <Label minWidth="-Infinity" text="Username" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label minWidth="-Infinity" text="Password" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <HBox alignment="BASELINE_LEFT" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Label fx:id="messageLabel" text="Not logged in." />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="loginButton" defaultButton="true" text="Login" />
+                  <Button fx:id="logoutButton" disable="true" text="Logout" />
+               </children>
+            </HBox>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="NEVER" />
+            <RowConstraints minHeight="10.0" vgrow="NEVER" />
+            <RowConstraints minHeight="10.0" vgrow="NEVER" />
+         </rowConstraints>
+      </GridPane>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</StackPane>

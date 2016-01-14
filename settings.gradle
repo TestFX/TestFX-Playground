@@ -1,8 +1,9 @@
 // name of root project.
 rootProject.name = "TestFX-Playground"
 
-// list of projects.
-include "projects/testfx-playground"
+// list of sample projects.
+include "samples/basics"
+include "samples/issues"
 
 // location of the build files.
 rootProject.children.each { project ->

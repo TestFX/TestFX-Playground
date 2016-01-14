@@ -1,4 +1,4 @@
-package org.testfx.playground;
+package org.testfx.playground.basics.counter;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
