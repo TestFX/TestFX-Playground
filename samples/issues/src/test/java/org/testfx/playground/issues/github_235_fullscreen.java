@@ -1,4 +1,4 @@
-package org.testfx.playground.issue;
+package org.testfx.playground.issues;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

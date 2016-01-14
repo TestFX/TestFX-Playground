@@ -1,0 +1,14 @@
+apply(plugin: "java")
+
+// test source dependencies.
+dependencies {
+    // testfx test library.
+    testCompile "org.testfx:testfx-core:4.0.+"
+    testCompile "org.testfx:testfx-junit:4.0.+"
+
+    // junit test framework and hamcrest assertions.
+    testCompile "junit:junit:4.12", {
+        exclude group: "org.hamcrest"
+    }
+    testCompile "org.hamcrest:hamcrest-all:1.3"
+}
