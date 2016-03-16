@@ -1,0 +1,20 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.1.RELEASE")
+    }
+}
+
+apply(plugin: "java")
+apply(plugin: "spring-boot")
+
+dependencies {
+    // application dependencies
+    compile "org.springframework.boot:spring-boot-starter"
+    compile "com.fasterxml.jackson.core:jackson-databind"
+
+    // test dependencies
+    testCompile "org.testfx:testfx-junit:4.0.+"
+}

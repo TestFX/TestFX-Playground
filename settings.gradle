@@ -4,6 +4,7 @@ rootProject.name = "TestFX-Playground"
 // list of sample projects.
 include "samples/basics"
 include "samples/issues"
+include "samples/spring-controllers"
 
 // location of the build files.
 rootProject.children.each { project ->

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+	fx:controller="org.testfx.playground.controller.MainController"
+	prefWidth="600" prefHeight="400">
+
+	<top>
+		<MenuBar>
+			<menus>
+				<Menu text="File">
+					<items>
+						<Menu text="Import">
+							<items>
+								<MenuItem fx:id="moreTeamsMenuItem" onAction="#loadMoreTeams" text="More Teams" />
+								<MenuItem fx:id="morePlayersMenuItem" onAction="#loadMorePlayers" text="More Players" />
+							</items>
+						</Menu>
+						<Menu text="Export">
+							<items>
+								<MenuItem text="All" />
+							</items>
+						</Menu>
+					</items>
+				</Menu>
+				<Menu text="View">
+					<items>
+						<CheckMenuItem fx:id="showFieldGoalPercentage"
+							selected="true" text="Show FG %" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
+
+	<center>
+		<fx:include source="Statistics.fxml" />
+	</center>
+
+</BorderPane>
